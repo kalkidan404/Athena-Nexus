@@ -24,10 +24,13 @@ const Challenges = () => {
         isAuthenticated && !isAdmin ? api.get('/api/submissions/my-submissions') : Promise.resolve({ data: [] })
       ]);
       
-      setWeeks(weeksRes.data.sort((a, b) => b.week_number - a.week_number));
+      // Ensure weeksRes.data is an array before sorting
+      const weeksData = Array.isArray(weeksRes.data) ? weeksRes.data : [];
+      setWeeks(weeksData.sort((a, b) => b.week_number - a.week_number));
       
       if (isAuthenticated && !isAdmin) {
-        setSubmissions(submissionsRes.data);
+        const submissionsData = Array.isArray(submissionsRes.data) ? submissionsRes.data : [];
+        setSubmissions(submissionsData);
       }
       
       // For admins, get submission counts per week
@@ -52,6 +55,13 @@ const Challenges = () => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      // If API URL is not configured, show helpful message
+      if (error.message?.includes('Network Error') || error.code === 'ERR_NETWORK') {
+        console.error('Backend API is not reachable. Please configure REACT_APP_API_URL in Netlify environment variables.');
+      }
+      // Set empty arrays on error to prevent further errors
+      setWeeks([]);
+      setSubmissions([]);
     } finally {
       setLoading(false);
     }
