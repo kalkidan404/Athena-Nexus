@@ -36,6 +36,7 @@ const Home = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const currentRef = statsRef.current;
     if (!currentRef) return;
@@ -60,7 +61,6 @@ const Home = () => {
     return () => {
       observer.unobserve(currentRef);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countersAnimated, loading]);
 
   const animateCounters = () => {

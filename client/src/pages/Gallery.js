@@ -9,9 +9,9 @@ const Gallery = () => {
   const [week, setWeek] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekId]);
 
   const fetchData = async () => {

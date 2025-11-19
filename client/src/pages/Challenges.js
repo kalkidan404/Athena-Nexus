@@ -12,9 +12,9 @@ const Challenges = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
   const fetchData = async () => {
