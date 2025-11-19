@@ -60,6 +60,7 @@ const Home = () => {
     return () => {
       observer.unobserve(currentRef);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countersAnimated, loading]);
 
   const animateCounters = () => {
