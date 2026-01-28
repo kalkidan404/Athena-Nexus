@@ -50,6 +50,12 @@ router.post('/signup', async (req, res) => {
 
     await user.save();
 
+    // Check if JWT_SECRET is set before creating token
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not set in environment variables');
+      return res.status(500).json({ message: 'Server configuration error: JWT_SECRET is missing' });
+    }
+
     // Log activity
     await ActivityLog.create({
       user_id: user._id,
@@ -70,7 +76,10 @@ router.post('/signup', async (req, res) => {
         id: user._id,
         username: user.username,
         role: user.role,
-        displayName: user.displayName
+        displayName: user.displayName,
+        members: user.members,
+        contactEmail: user.contactEmail,
+        profileImageUrl: user.profileImageUrl
       },
       message: 'Account created successfully!'
     });
@@ -150,7 +159,10 @@ router.post('/login', loginLimiter, async (req, res) => {
         id: user._id,
         username: user.username,
         role: user.role,
-        displayName: user.displayName
+        displayName: user.displayName,
+        members: user.members,
+        contactEmail: user.contactEmail,
+        profileImageUrl: user.profileImageUrl
       }
     });
   } catch (error) {
@@ -185,7 +197,8 @@ router.get('/me', async (req, res) => {
         role: user.role,
         displayName: user.displayName,
         members: user.members,
-        contactEmail: user.contactEmail
+        contactEmail: user.contactEmail,
+        profileImageUrl: user.profileImageUrl
       }
     });
   } catch (error) {

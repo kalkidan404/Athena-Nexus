@@ -38,7 +38,7 @@ api.interceptors.response.use(
     }
     // Log network errors for debugging
     if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
-      console.error('Network Error: Cannot reach backend API. Make sure REACT_APP_API_URL is set in Netlify environment variables.');
+      console.error('Network Error: Cannot reach backend API. Make sure REACT_APP_API_URL is set in Vercel environment variables.');
     }
     return Promise.reject(error);
   }

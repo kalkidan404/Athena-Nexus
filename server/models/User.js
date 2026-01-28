@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  // Optional profile image URL for group/team
+  profileImageUrl: {
+    type: String,
+    trim: true
+  },
   created_at: {
     type: Date,
     default: Date.now

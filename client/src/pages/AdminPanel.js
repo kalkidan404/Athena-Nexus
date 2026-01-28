@@ -519,7 +519,22 @@ const AdminPanel = () => {
                           </a>
                         )}
                       </div>
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '4px', flexWrap: 'wrap' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const primaryUrl = submission.github_live_demo_url || submission.github_repo_url;
+                            if (primaryUrl) {
+                              window.open(primaryUrl, '_blank', 'noopener,noreferrer');
+                            } else {
+                              alert('No URL provided for this submission.');
+                            }
+                          }}
+                          className="btn btn-outline"
+                          style={{ padding: '6px 12px', fontSize: '14px' }}
+                        >
+                          Check
+                        </button>
                         <button
                           onClick={() => handleUpdateSubmissionStatus(submission._id, 'approved')}
                           className="btn btn-success"
@@ -552,8 +567,44 @@ const AdminPanel = () => {
                     justifyContent: 'center',
                     zIndex: 1000
                   }}>
-                    <div className="card" style={{ maxWidth: '500px', width: '90%' }}>
-                      <h2 style={{ marginBottom: '16px' }}>Reject Submission</h2>
+                    <div className="card" style={{ maxWidth: '520px', width: '90%' }}>
+                      <h2 style={{ marginBottom: '16px' }}>Review & Reject Submission</h2>
+
+                      <div style={{ marginBottom: '16px', padding: '12px', backgroundColor: 'var(--bg-tertiary)', borderRadius: '6px' }}>
+                        <p style={{ marginBottom: '8px', fontWeight: 600 }}>
+                          {selectedSubmission.user_id?.displayName || selectedSubmission.user_id?.username}
+                        </p>
+                        <p style={{ marginBottom: '8px', color: 'var(--text-secondary)', fontSize: '14px' }}>
+                          Week {selectedSubmission.week_id?.week_number || 'N/A'}: {selectedSubmission.week_id?.title || 'Untitled'}
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '14px' }}>
+                          <span>
+                            <strong>GitHub:</strong>{' '}
+                            <a
+                              href={selectedSubmission.github_repo_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: 'var(--primary)' }}
+                            >
+                              {selectedSubmission.github_repo_url}
+                            </a>
+                          </span>
+                          {selectedSubmission.github_live_demo_url && (
+                            <span>
+                              <strong>Live Demo:</strong>{' '}
+                              <a
+                                href={selectedSubmission.github_live_demo_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: 'var(--primary)' }}
+                              >
+                                {selectedSubmission.github_live_demo_url}
+                              </a>
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
                       <div className="form-group">
                         <label className="form-label">Reviewer Notes</label>
                         <textarea

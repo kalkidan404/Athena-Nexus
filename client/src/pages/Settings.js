@@ -15,7 +15,8 @@ const Settings = () => {
     displayName: '',
     email: '',
     contactEmail: '',
-    members: []
+    members: [],
+    profileImageUrl: ''
   });
 
   useEffect(() => {
@@ -24,7 +25,8 @@ const Settings = () => {
         displayName: user.displayName || '',
         email: user.email || '',
         contactEmail: user.contactEmail || '',
-        members: user.members || []
+        members: user.members || [],
+        profileImageUrl: user.profileImageUrl || ''
       });
     }
   }, [user]);
@@ -47,7 +49,8 @@ const Settings = () => {
         displayName: profileForm.displayName,
         email: profileForm.email,
         contactEmail: profileForm.contactEmail,
-        members: profileForm.members
+        members: profileForm.members,
+        profileImageUrl: profileForm.profileImageUrl
       });
       setSuccess('Profile updated successfully!');
       // Refresh user data after a short delay
@@ -156,6 +159,36 @@ const Settings = () => {
                   placeholder="Your team's display name"
                 />
               </div>
+
+              <div className="form-group">
+                <label className="form-label">Profile Image URL</label>
+                <input
+                  type="url"
+                  className="form-input"
+                  value={profileForm.profileImageUrl}
+                  onChange={(e) => setProfileForm({ ...profileForm, profileImageUrl: e.target.value })}
+                  placeholder="https://example.com/your-team-image.png"
+                />
+                <small style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+                  Paste a public image URL for your team profile picture.
+                </small>
+              </div>
+
+              {profileForm.profileImageUrl && (
+                <div className="form-group">
+                  <label className="form-label">Preview</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img
+                      src={profileForm.profileImageUrl}
+                      alt="Team profile"
+                      style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--border-color)' }}
+                    />
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+                      This is how your team avatar will appear around the app.
+                    </span>
+                  </div>
+                </div>
+              )}
 
               <div className="form-group">
                 <label className="form-label">Email</label>

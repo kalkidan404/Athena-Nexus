@@ -14,3 +14,6 @@ console.log(secret);
 console.log('\nCopy this to your .env file as:');
 console.log(`JWT_SECRET=${secret}\n`);
 
+
+
+

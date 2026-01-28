@@ -58,12 +58,27 @@ const Dashboard = () => {
       <Navbar />
       <div className="container" style={{ marginTop: '32px' }}>
         <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h1 style={{ marginBottom: '8px' }}>
-                Welcome, {user?.displayName || user?.username}!
-              </h1>
-              <p style={{ color: 'var(--text-secondary)' }}>Manage your weekly submissions</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              {user?.profileImageUrl && (
+                <img
+                  src={user.profileImageUrl}
+                  alt="Team profile"
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '1px solid var(--border-color)'
+                  }}
+                />
+              )}
+              <div>
+                <h1 style={{ marginBottom: '8px' }}>
+                  Welcome, {user?.displayName || user?.username}!
+                </h1>
+                <p style={{ color: 'var(--text-secondary)' }}>Manage your weekly submissions</p>
+              </div>
             </div>
             <Link to="/settings" className="btn btn-outline">
               Team Settings

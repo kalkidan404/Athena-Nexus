@@ -101,7 +101,7 @@ router.delete('/weeks/:id', async (req, res) => {
 // Create group/user
 router.post('/users', async (req, res) => {
   try {
-    const { username, password, email, displayName, members, contactEmail } = req.body;
+    const { username, password, email, displayName, members, contactEmail, profileImageUrl } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required' });
@@ -126,7 +126,8 @@ router.post('/users', async (req, res) => {
       role: 'member',
       displayName: displayName || username,
       members: members || [],
-      contactEmail: contactEmail || email || ''
+      contactEmail: contactEmail || email || '',
+      profileImageUrl: profileImageUrl || ''
     });
 
     await user.save();
@@ -171,12 +172,13 @@ router.put('/users/:id', verifyToken, async (req, res) => {
       return res.status(403).json({ message: 'Not authorized to update this user' });
     }
 
-    const { displayName, email, members, contactEmail } = req.body;
+    const { displayName, email, members, contactEmail, profileImageUrl } = req.body;
 
     if (displayName !== undefined) user.displayName = displayName;
     if (email !== undefined) user.email = email;
     if (members !== undefined) user.members = members;
     if (contactEmail !== undefined) user.contactEmail = contactEmail;
+    if (profileImageUrl !== undefined) user.profileImageUrl = profileImageUrl;
 
     await user.save();
     res.json({
@@ -185,7 +187,8 @@ router.put('/users/:id', verifyToken, async (req, res) => {
       displayName: user.displayName,
       members: user.members,
       email: user.email,
-      contactEmail: user.contactEmail
+      contactEmail: user.contactEmail,
+      profileImageUrl: user.profileImageUrl
     });
   } catch (error) {
     console.error('Update user error:', error);
